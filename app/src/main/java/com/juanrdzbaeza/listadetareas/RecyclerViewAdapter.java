@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by juan on 10/4/18.
@@ -16,7 +17,8 @@ import android.widget.TextView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private int recyclerItemRes;
-    private String[] data;
+    //private String[] data;
+    private List<Tarea> data;
     private Context context;
 
     /**
@@ -25,7 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      * @param recyclerItemRes elemento de la lista
      * @param data datos que rellenaran la lista
      */
-    public RecyclerViewAdapter(Context context, int recyclerItemRes, String[] data) {
+    public RecyclerViewAdapter(Context context, int recyclerItemRes, List<Tarea> data) {
         this.recyclerItemRes = recyclerItemRes;
         this.data = data;
         this.context = context;
@@ -51,7 +53,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.descripcion.setText(data[position]);
+        holder.descripcion.setText(data.get(position).getDescripcion());
+        holder.fecha.setText(data.get(position).getFecha());
     }
 
     /**
@@ -61,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         if (data != null) {
-            return data.length;
+            return data.size();
         }
         return 0;
     }
@@ -72,12 +75,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView descripcion;
-        //private TextView fecha;
+        private TextView fecha;
 
         private ViewHolder(View itemView) {
             super(itemView);
-            descripcion = itemView.findViewById(R.id.descripcion);
-            //fecha       = itemView.findViewById(R.id.fecha);
+            descripcion   = itemView.findViewById(R.id.descripcion);
+            fecha         = itemView.findViewById(R.id.fecha);
         }
     }
 }
