@@ -1,5 +1,6 @@
 package com.juanrdzbaeza.listadetareas;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         switch (id){
             case R.id.action_settings:
                 Toast.makeText(this, "ha seleccionado el boton para agregar una tarea", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, NewTask.class);
+                startActivity(intent);
                 return true;
             case R.id.action_share:
                 Toast.makeText(this, "ha seleccionado el boton para compartir", Toast.LENGTH_SHORT).show();

@@ -7,4 +7,5 @@
     <string name="delete_menu">Borrar</string>
     <string name="share_menu">Compartir</string>
     <string name="search_menu">Buscar</string>
+    <string name="button">Button</string>
 </resources>
