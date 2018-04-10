@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
                 "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
                 "Jelly Bean", "KitKat", "Lolipop", "Marshmallow", "Nougat", "Oreo", "P"
         };
-
     private ArrayList<Tarea> tareas;
 
     @Override
