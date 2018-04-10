@@ -79,8 +79,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         private ViewHolder(View itemView) {
             super(itemView);
-            descripcion   = itemView.findViewById(R.id.descripcion);
-            fecha         = itemView.findViewById(R.id.fecha);
+            descripcion = itemView.findViewById(R.id.descripcion);
+            fecha       = itemView.findViewById(R.id.fecha);
         }
     }
 }

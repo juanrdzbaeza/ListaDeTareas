@@ -10,7 +10,10 @@ import java.util.Date;
 public class Tarea {
 
     private String descripcion;
-    private String fecha;
+    private String fecha;   /* TODO: 10/4/18 el atributo fecha del objeto tarea debera ser tipo date,
+                             * se hará necesario tratar los datos en algun momento para mostrarlo como un String
+                             */
+
 
     public Tarea(String descripcion, String fecha) {
         this.descripcion = descripcion;
