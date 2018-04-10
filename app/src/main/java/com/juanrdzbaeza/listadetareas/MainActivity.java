@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,21 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Tarea> tareas;
 
-    /*
-map.put(4, "Donut");
-map.put(5, "Eclair");		map.put(8, "Froyo");
-map.put(9, "Gingerbread");	map.put(11, "Honeycomb");
-map.put(14, "Ice Cream Sandwich");	map.put(16, "Jelly Bean");
-map.put(19, "KitKat");		map.put(21, "Lolipop");
-map.put(23, "Marshmallow");
-*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initList();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (null != toolbar) {
+            setSupportActionBar(toolbar);
+        }
 
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -48,7 +47,11 @@ map.put(23, "Marshmallow");
         recyclerView.setAdapter(adapter);
 
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
     private void initList() {
         /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();

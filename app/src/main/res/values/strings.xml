@@ -2,4 +2,9 @@
     <string name="app_name">ListaDeTareas</string>
     <string name="descripcion">descripcion</string>
     <string name="fecha">fecha</string>
+
+    <string name="settings_menu">Opciones</string>
+    <string name="delete_menu">Borrar</string>
+    <string name="share_menu">Compartir</string>
+    <string name="search_menu">Buscar</string>
 </resources>
