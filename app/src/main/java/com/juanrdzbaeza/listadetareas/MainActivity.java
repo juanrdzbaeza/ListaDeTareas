@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
                                                                             // myDataSet seran los datos recuperados
         adapter = new RecyclerViewAdapter(this, R.layout.layout_fila, tareas);
         recyclerView.setAdapter(adapter);
