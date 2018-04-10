@@ -6,9 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -16,10 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private String[] myDataset = {
-                "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
-                "Jelly Bean", "KitKat", "Lolipop", "Marshmallow", "Nougat", "Oreo", "P"
-        };
     private ArrayList<Tarea> tareas;
 
     @Override
