@@ -8,6 +8,8 @@ import android.view.View;
 
 public class NewTask extends AppCompatActivity {
 
+    // TODO: 10/4/18 implementar Vista y Presentador para NewTask 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id){ // TODO: 10/4/18 controlar las acciones de los distintos botones del menu. 
             case R.id.action_settings:
                 Toast.makeText(this, "ha seleccionado el boton para agregar una tarea", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, NewTask.class);
