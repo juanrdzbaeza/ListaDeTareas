@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         String newDia           = "";
         String newMes           = "";
         String newYear          = "";
+        String newHour          = "";
+        String newMin           = "";
         String newDate          = "";
+        String newHourMinute    = "";
 
 
         // String[] tareaEnviada   = new String[2];
@@ -57,11 +60,16 @@ public class MainActivity extends AppCompatActivity {
                 newDia          = newTask.getStringExtra("dia");
                 newMes          = newTask.getStringExtra("mes");
                 newYear         = newTask.getStringExtra("year");
+                newHour         = newTask.getStringExtra("hora");
+                newMin          = newTask.getStringExtra("minuto");
+
                 newDate         = newDia+"/"+newMes+"/"+newYear;
+                newHourMinute   = newHour+":"+newMin;
+
                 //newDate         = newTask.getStringArrayExtra();
                 // TODO: ver como amarrar todos los parametros en un array
 
-                nuevaTarea = new Tarea(newDescription, newDate);
+                nuevaTarea = new Tarea(newDescription, newDate, newHourMinute);
                 tareas.add(nuevaTarea);
             }
 

@@ -12,4 +12,5 @@
     <string name="que_dia">¿Qué día?</string>
     <string name="descripcion_de_la_tarea">Descripcion de la tarea</string>
     <string name="fecha_sin_fijar">Fecha sin fijar</string>
+    <string name="hora_sin_fijar">Hora sin Fijar</string>
 </resources>
