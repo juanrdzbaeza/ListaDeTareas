@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
         String newMin           = "";
         String newDate          = "";
         String newHourMinute    = "";
-
-
+        
         // String[] tareaEnviada   = new String[2];
 
         if (null != getIntent()){
