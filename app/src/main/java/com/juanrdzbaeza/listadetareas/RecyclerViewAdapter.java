@@ -54,7 +54,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.descripcion.setText(data.get(position).getDescripcion());
-        holder.fecha.setText(data.get(position).getFecha());
+
+        // TODO: 11/4/18 pensar alguna manera de presentar mejor la informacion.
+        String conca = (data.get(position).getFecha()+" a las "+data.get(position).getHora());
+        holder.fecha.setText(conca);
+
     }
 
     /**

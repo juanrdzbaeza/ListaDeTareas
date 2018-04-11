@@ -18,13 +18,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
     private ArrayList<Tarea> tareas;
+    private Tarea nuevaTarea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initList();
+        initList(); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar llegado el momento.
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (null != toolbar) {
@@ -36,9 +37,43 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-                                                                            // myDataSet seran los datos recuperados
+                                                                            //TODO: tareas seran los datos recuperados
         adapter = new RecyclerViewAdapter(this, R.layout.layout_fila, tareas);
         recyclerView.setAdapter(adapter);
+
+        Intent newTask          = getIntent();
+        String newDescription   = "";
+        String newDia           = "";
+        String newMes           = "";
+        String newYear          = "";
+        String newHour          = "";
+        String newMin           = "";
+        String newDate          = "";
+        String newHourMinute    = "";
+
+
+        // String[] tareaEnviada   = new String[2];
+
+        if (null != getIntent()){
+            if (newTask.hasExtra("Descripcion")) {
+                newDescription  = newTask.getStringExtra("Descripcion");
+                newDia          = newTask.getStringExtra("dia");
+                newMes          = newTask.getStringExtra("mes");
+                newYear         = newTask.getStringExtra("year");
+                newHour         = newTask.getStringExtra("hora");
+                newMin          = newTask.getStringExtra("minuto");
+
+                newDate         = newDia+"/"+newMes+"/"+newYear;
+                newHourMinute   = newHour+":"+newMin;
+
+                //newDate         = newTask.getStringArrayExtra();
+                // TODO: ver como amarrar todos los parametros en un array
+
+                nuevaTarea = new Tarea(newDescription, newDate, newHourMinute);
+                tareas.add(nuevaTarea);
+            }
+
+        }
 
     }
     @Override
