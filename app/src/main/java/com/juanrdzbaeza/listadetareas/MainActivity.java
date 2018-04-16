@@ -25,11 +25,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toast.makeText(this, "colora", Toast.LENGTH_SHORT).show();
+
         initList(); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar llegado el momento.
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (null != toolbar) {
             setSupportActionBar(toolbar);
+        }
+
+        Intent intentNewTask = getIntent();
+        if (null != getIntent()){
+            if (intentNewTask.hasExtra("Tarea")) {
+                nuevaTarea = (Tarea) getIntent().getExtras().getSerializable("Tarea");
+                tareas.add(nuevaTarea);
+            }
         }
 
         recyclerView = findViewById(R.id.my_recycler_view);
@@ -37,44 +48,16 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-                                                                            //TODO: tareas seran los datos recuperados
         adapter = new RecyclerViewAdapter(this, R.layout.layout_fila, tareas);
         recyclerView.setAdapter(adapter);
-
-        Intent newTask          = getIntent();
-        String newDescription   = "";
-        String newDia           = "";
-        String newMes           = "";
-        String newYear          = "";
-        String newHour          = "";
-        String newMin           = "";
-        String newDate          = "";
-        String newHourMinute    = "";
-        
-        // String[] tareaEnviada   = new String[2];
-
-        if (null != getIntent()){
-            if (newTask.hasExtra("Descripcion")) {
-                newDescription  = newTask.getStringExtra("Descripcion");
-                newDia          = newTask.getStringExtra("dia");
-                newMes          = newTask.getStringExtra("mes");
-                newYear         = newTask.getStringExtra("year");
-                newHour         = newTask.getStringExtra("hora");
-                newMin          = newTask.getStringExtra("minuto");
-
-                newDate         = newDia+"/"+newMes+"/"+newYear;
-                newHourMinute   = newHour+":"+newMin;
-
-                //newDate         = newTask.getStringArrayExtra();
-                // TODO: ver como amarrar todos los parametros en un array
-
-                nuevaTarea = new Tarea(newDescription, newDate, newHourMinute);
-                tareas.add(nuevaTarea);
-            }
-
-        }
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "de manteca", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -90,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, NewTask.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_share:
-                Toast.makeText(this, "ha seleccionado el boton para compartir", Toast.LENGTH_SHORT).show();
+            case R.id.action_prueba:
+
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 return true;
+
             case R.id.action_delete:
                 Toast.makeText(this, "ha seleccionado el boton para eliminar una o varias tareas", Toast.LENGTH_SHORT).show();
                 return true;
@@ -109,24 +94,26 @@ public class MainActivity extends AppCompatActivity {
         String fecha = dateFormat.format(date);
         */
         tareas = new ArrayList<>();
-        Tarea cupcake          = new Tarea("Cupcake", Integer.valueOf(3).toString());
-        Tarea donut            = new Tarea("Donut", Integer.valueOf(4).toString());
-        Tarea eclair           = new Tarea("Eclair", Integer.valueOf(5).toString());
-        Tarea froyo            = new Tarea("Froyo", Integer.valueOf(8).toString());
-        Tarea gingerbread      = new Tarea("Gingerbread", Integer.valueOf(9).toString());
-        Tarea honeycomb        = new Tarea("Honeycomb", Integer.valueOf(11).toString());
-        Tarea iceCreamSandwich = new Tarea("Ice Cream Sandwich", Integer.valueOf(14).toString());
-        Tarea jellyBean        = new Tarea("Jelly Bean", Integer.valueOf(16).toString());
-        Tarea kitkat           = new Tarea("KitKat",Integer.valueOf(19).toString());
-        Tarea lollipop         = new Tarea("Lollipop", Integer.valueOf(21).toString());
-        Tarea marshmallow      = new Tarea("Marshmallow", Integer.valueOf(23).toString());
-        Tarea nougat           = new Tarea("Nougat", Integer.valueOf(24).toString());
-        Tarea oreo             = new Tarea("Oreo",Integer.valueOf(26).toString());
-        Tarea p                = new Tarea("P",Integer.valueOf(28).toString());
+        /*
+        Tarea cupcake          = new Tarea("Cupcake", new Date());
+        Tarea donut            = new Tarea("Donut", new Date());
+        Tarea eclair           = new Tarea("Eclair", new Date());
+        Tarea froyo            = new Tarea("Froyo", new Date());
+        Tarea gingerbread      = new Tarea("Gingerbread", new Date());
+        Tarea honeycomb        = new Tarea("Honeycomb", new Date());
+        Tarea iceCreamSandwich = new Tarea("Ice Cream Sandwich", new Date());
+        Tarea jellyBean        = new Tarea("Jelly Bean", new Date());
+        Tarea kitkat           = new Tarea("KitKat", new Date());
+        Tarea lollipop         = new Tarea("Lollipop", new Date());
+        Tarea marshmallow      = new Tarea("Marshmallow", new Date());
+        Tarea nougat           = new Tarea("Nougat", new Date());
+        Tarea oreo             = new Tarea("Oreo", new Date());
+        Tarea p                = new Tarea("P",new Date());
         Collections.addAll(tareas,cupcake,donut,eclair,froyo,
                 gingerbread,honeycomb,iceCreamSandwich,
                 jellyBean,kitkat,lollipop,marshmallow,
                 nougat,oreo,p);
+        */
     }
 
 

@@ -1,38 +1,32 @@
 package com.juanrdzbaeza.listadetareas;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by juan on 10/4/18.
  *
  */
 
-/*
- * TODO: 11/4/18 hay que razonar la gestion de los datos, una tarea tiene una descripcion y una fecha que estara
- * compuesta por dia/mes/año y hora:minutos, por lo que habra que pensar como recoger los datos para almacenarlos.
- */
-public class Tarea {
+// TODO: 13/4/18 pensar si seria posible implementar fecha de inicio y fecha de fin.
+
+public class Tarea implements Serializable {
 
     private String descripcion;
-    private String fecha;   /* TODO: 10/4/18 el atributo fecha del objeto tarea debera ser tipo date,
-                             * se hará necesario tratar los datos en algun momento para mostrarlo como un String
-                             */
-    private String hora;
+    private Date fecha;
 
-    public Tarea(String descripcion, String fecha, String hora) {
-        this.descripcion = descripcion;
-        this.fecha = fecha;
-        this.hora = hora;
-    }
-
-    public Tarea(String descripcion, String fecha) {
+    public Tarea(String descripcion, Date fecha) {
         this.descripcion = descripcion;
         this.fecha = fecha;
     }
 
+    /* TODO 13-04-2018: ¿es necesario un constructor que tome solo la descripcion?
     public Tarea(String descripcion) {
         this.descripcion = descripcion;
     }
+    */
 
     public String getDescripcion() {
         return descripcion;
@@ -42,28 +36,24 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
     }
 
     @Override
     public String toString() {
-        return "Tarea{" +
-                "descripcion='" + descripcion + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", hora='" + hora + '\'' +
-                '}';
+        // TODO: 13/4/18 implementar un toString que devuelva la fecha formateada.
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        String fecha = dateFormat.format(getFecha());
+
+
+
+        return fecha;
     }
 }

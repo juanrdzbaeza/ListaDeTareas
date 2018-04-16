@@ -2,6 +2,7 @@ package com.juanrdzbaeza.listadetareas;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private int recyclerItemRes;
-    //private String[] data;
     private List<Tarea> data;
     private Context context;
 
@@ -54,11 +54,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.descripcion.setText(data.get(position).getDescripcion());
-
-        // TODO: 11/4/18 pensar alguna manera de presentar mejor la informacion.
-        String conca = (data.get(position).getFecha()+" a las "+data.get(position).getHora());
+        // TODO: 13/4/18 el string conca de momento esta a prueba, arreglar futuramente.
+        String conca = (data.get(position).toString());
         holder.fecha.setText(conca);
-
     }
 
     /**
