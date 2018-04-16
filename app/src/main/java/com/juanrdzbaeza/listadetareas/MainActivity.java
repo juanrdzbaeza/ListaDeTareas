@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, "colora", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "colora", Toast.LENGTH_SHORT).show();
 
         initList(); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar llegado el momento.
 
