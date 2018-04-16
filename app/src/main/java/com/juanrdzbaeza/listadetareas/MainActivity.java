@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "colora", Toast.LENGTH_SHORT).show();
 
         initList(); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar llegado el momento.
-
-
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (null != toolbar) {
             setSupportActionBar(toolbar);
