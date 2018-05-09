@@ -2,12 +2,13 @@ package com.juanrdzbaeza.listadetareas;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 /**
  * Created by juan on 10/4/18.
- *
+ * Objeto Tarea.
  */
 
 // TODO: 13/4/18 pensar si seria posible implementar fecha de inicio y fecha de fin.
@@ -15,18 +16,12 @@ import java.util.Locale;
 public class Tarea implements Serializable {
 
     private String descripcion;
-    private Date fecha;
+    private Calendar fecha;
 
-    public Tarea(String descripcion, Date fecha) {
+    public Tarea(String descripcion, Calendar fecha) {
         this.descripcion = descripcion;
         this.fecha = fecha;
     }
-
-    /* TODO 13-04-2018: ¿es necesario un constructor que tome solo la descripcion?
-    public Tarea(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    */
 
     public String getDescripcion() {
         return descripcion;
@@ -36,24 +31,25 @@ public class Tarea implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
+    public Calendar getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
     }
 
+    /**
+     * Método toString() para la clase Tarea, devuelve un String formateado de la forma "E, dd/MM/yyyy a las HH:mm"
+     * siendo E el nombre del dia en la semana, d el numero del dia en el mes, M el numero del mes en el año y el año
+     * H la hora en formato 24 y m el numero de minuto en la hora.
+     * @return String "E, dd/MM/yyyy a las HH:mm"
+     */
     @Override
     public String toString() {
-        // TODO: 13/4/18 implementar un toString que devuelva la fecha formateada.
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
-        String fecha = dateFormat.format(getFecha());
-
-
-
-        return fecha;
+        SimpleDateFormat dateFormatFecha    = new SimpleDateFormat("E, dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormatHora     = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        Date d = getFecha().getTime();
+        return dateFormatFecha.format(d)+" a las "+dateFormatHora.format(d);
     }
 }
