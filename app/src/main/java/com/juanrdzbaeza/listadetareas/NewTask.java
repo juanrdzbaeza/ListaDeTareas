@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.*;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -24,7 +25,7 @@ public class NewTask extends AppCompatActivity {
     TimePicker timePicker;
     Button btnCalendar, btnClock, btnOkDate, btnOkClock;
     Integer d,m,y,hor,min;
-    Date date = new Date();
+    Calendar calendar = Calendar.getInstance();
 
 
     @Override
@@ -32,11 +33,12 @@ public class NewTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
+        Intent a = getIntent();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (null != toolbar) {
             setSupportActionBar(toolbar);
         }
-
         taskDescription = findViewById(R.id.task);
         taskDate        = findViewById(R.id.date);
         taskClock       = findViewById(R.id.clock);
@@ -51,6 +53,9 @@ public class NewTask extends AppCompatActivity {
             public void onClick(View v) {
                 datePicker.setVisibility(View.VISIBLE);
                 btnOkDate.setVisibility(View.VISIBLE);
+
+                timePicker.setVisibility(View.INVISIBLE);
+                btnOkClock.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -69,12 +74,13 @@ public class NewTask extends AppCompatActivity {
             case R.id.action_save:
                 //Toast.makeText(this, "ha seleccionado el boton para salvar la tarea", Toast.LENGTH_SHORT).show();
                 // TODO: 11/4/18 si los campos de texto estan vacios la app deveria advertir de ello y no permitir el envio
-                Intent intentNewTask = new Intent(this, MainActivity.class);
-                Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), date);
+                Intent intentNewTask = new Intent();
+                Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), calendar);
                 intentNewTask.putExtra("Tarea", nuevaTarea);
 
+                setResult(1,intentNewTask);
+                finish();
 
-                startActivity(intentNewTask);
                 return true;
             case R.id.action_cancel:
                 Toast.makeText(this, "ha seleccionado el boton para cancelar la tarea", Toast.LENGTH_SHORT).show();
@@ -92,9 +98,7 @@ public class NewTask extends AppCompatActivity {
         m = datePicker.getMonth(); // los meses empiezan en 0 (enero = 0, diciembre = 11)
         y = datePicker.getYear();
 
-        date.setYear(y);
-        date.setMonth(m);
-        date.setDate(d);
+
 
         taskDate.setText(d.toString()+"/"+(++m).toString()+"/"+y.toString());
         timePicker.setVisibility(View.VISIBLE);
@@ -106,8 +110,9 @@ public class NewTask extends AppCompatActivity {
     public void getClock(View v) {
         hor = timePicker.getCurrentHour();
         min = timePicker.getCurrentMinute();
-        date.setHours(hor);
-        date.setMinutes(min);
+
+        calendar.set(y,m,d,hor,min);
+
         taskClock.setText(hor.toString()+":"+min.toString());
         timePicker.setVisibility(View.INVISIBLE);
         btnOkClock.setVisibility(View.INVISIBLE);
