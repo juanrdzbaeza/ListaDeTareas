@@ -1,7 +1,9 @@
 package com.juanrdzbaeza.listadetareas;
 
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.*;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -72,15 +75,16 @@ public class NewTask extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_save:
-                //Toast.makeText(this, "ha seleccionado el boton para salvar la tarea", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "ha seleccionado el boton para salvar la tarea", Toast.LENGTH_SHORT).show();
                 // TODO: 11/4/18 si los campos de texto estan vacios la app deveria advertir de ello y no permitir el envio
-                Intent intentNewTask = new Intent();
+                // Intent intentNewTask = new Intent();
                 Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), calendar);
+                storeTask(nuevaTarea);
+                /*
                 intentNewTask.putExtra("Tarea", nuevaTarea);
-
                 setResult(1,intentNewTask);
+                */
                 finish();
-
                 return true;
             case R.id.action_cancel:
                 Toast.makeText(this, "ha seleccionado el boton para cancelar la tarea", Toast.LENGTH_SHORT).show();
@@ -89,6 +93,28 @@ public class NewTask extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * storeTask recive la nueva tarea recien registrada por el usuario, extrae sus atributos,
+     * descripcion como String, y fecha lo pasa a long, despues se conecta a la base de datos
+     * gestionTareas, y escribe alli la informacion en los campos correspondientes.
+     * @param nuevaTarea
+     */
+    private void storeTask(Tarea nuevaTarea) {
+        String descripcion = nuevaTarea.getDescripcion();
+        Calendar fecha = nuevaTarea.getFecha();
+        long timeInMillis = fecha.getTimeInMillis();
+
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
+                this,"gestionTareas", null, 1
+        );
+        SQLiteDatabase db = admin.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("descripcion",descripcion);
+        values.put("fecha",timeInMillis);
+        long newRowId = db.insert("tareas",null, values);
+        //Toast.makeText(this, String.valueOf(newRowId), Toast.LENGTH_LONG).show();
     }
 
     public void getDate(View v) {
