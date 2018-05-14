@@ -80,13 +80,15 @@
         android:id="@+id/dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:visibility="invisible" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clock" />
 
     <Button
         android:id="@+id/btn_ok_date"
@@ -108,15 +110,17 @@
         android:layout_marginBottom="16dp" />
 
     <TimePicker
+        android:id="@+id/tp"
         android:layout_width="249dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tp"
-        android:timePickerMode="spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp"
-        android:visibility="invisible" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:timePickerMode="spinner"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clock" />
 
     <Button
         android:layout_width="wrap_content"
