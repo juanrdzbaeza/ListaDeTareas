@@ -111,7 +111,15 @@ public class NewTask extends AppCompatActivity {
         hor = timePicker.getCurrentHour();
         min = timePicker.getCurrentMinute();
 
-        calendar.set(y,m,d,hor,min);
+        /*
+         * se incorpora un parche al mes restandole una unidad para hacer corresponder la fecha
+         * introducida con la mostrada y con la almacenada, que será esta ultima la que se recoja en
+         * la actividad principal para listar las tareas.
+         * no he encontrado porque devuelve un mes mas del que se introduce, supongo que la clase
+         * Calendar resuelve el hecho de que los meses empiezen en 0 para enero.
+         */
+
+        calendar.set(y,--m,d,hor,min);
 
         taskClock.setText(hor.toString()+":"+min.toString());
         timePicker.setVisibility(View.INVISIBLE);
