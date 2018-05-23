@@ -1,6 +1,9 @@
 package com.juanrdzbaeza.listadetareas;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,66 +13,90 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.sql.Time;
 import java.util.*;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
     private ArrayList<Tarea> tareas;
-    private Tarea nuevaTarea;
-    private int REQUEST_TASK = 1, TAREA_OK = 1, TAREA_KO = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initList(); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar llegado el momento.
         
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (null != toolbar) {
             setSupportActionBar(toolbar);
         }
-        
-        llenarVista();
+
+        loadTask();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TASK){
-            if (resultCode == TAREA_OK) {
-                data.hasExtra("Tarea");
-                if (null != getIntent()){
-                    if (data.hasExtra("Tarea")) {
-
-                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
-
-                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
-                        tareas.add(nuevaTarea);
-
-                    }
-                }
-                llenarVista();
-            } else {
-                Toast.makeText(this, "adonde esta er jachi", Toast.LENGTH_LONG).show();
-            }
-        }
+    protected void onResume() {
+        super.onResume();
+        loadTask();
     }
 
-    public void llenarVista() {
+    /**
+     * TODO: javadoc metodo cargarTareas()
+     */
+    @SuppressLint("Recycle")
+    public void loadTask() {
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
+                this,"gestionTareas", null, 1
+        );
+        SQLiteDatabase db = admin.getWritableDatabase();
+        Cursor fila = null;
+        try {
+            fila = db.query(
+                    "tareas",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        recyclerView = findViewById(R.id.my_recycler_view);
+        tareas = new ArrayList<>();
+        Tarea aux;
+        Calendar c;
+
+        if ((fila != null) && (fila.moveToFirst())) {
+            do {
+                aux = new Tarea(null,null);
+                c   = Calendar.getInstance();
+                aux.setDescripcion(fila.getString(1));
+                c.setTimeInMillis(fila.getLong(2));
+                aux.setFecha(c);
+                initList(aux); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar si procede llegado el momento.
+            }while (fila.moveToNext());
+        } else {
+            Toast.makeText(this, "No se encontraron tareas por hacer", Toast.LENGTH_SHORT).show();
+        }
+
+        fillView();
+    }
+
+    /**
+     * TODO: javadoc metodo fillView()
+     */
+    public void fillView() {
+
+        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new RecyclerViewAdapter(this, R.layout.layout_fila, tareas);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, R.layout.layout_fila, tareas);
         recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id){ // TODO: 10/4/18 controlar las acciones de los distintos botones del menu. 
             case R.id.action_settings:
-                Toast.makeText(this, "ha seleccionado el boton para agregar una tarea", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "ha seleccionado el boton para agregar una tarea", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, NewTask.class);
-                startActivityForResult(intent, REQUEST_TASK);
+                startActivity(intent);
                 return true;
             case R.id.action_prueba:
 
@@ -102,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initList() {
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
-                this,"gestionTareas", null, 1
-        );
+    private void initList(Tarea t) {
+
+        tareas.add(t);
+
         /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         String fecha = dateFormat.format(date);
-        */
+
         tareas = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         c.set(2008,8, 23, 12,00);
@@ -179,7 +206,36 @@ public class MainActivity extends AppCompatActivity {
                 gingerbread,honeycomb,iceCreamSandwich,
                 jellyBean,kitKat,lollipop,marshmallow,
                 nougat,oreo,p);
+        */
     }
 
-
 }
+
+    /*
+    papelera:
+     */
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TASK){
+            if (resultCode == TAREA_OK) {
+                data.hasExtra("Tarea");
+                if (null != getIntent()){
+                    if (data.hasExtra("Tarea")) {
+
+                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
+
+                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
+                        tareas.add(nuevaTarea);
+
+                    }
+                }
+                fillView();
+            } else {
+                Toast.makeText(this, "el perro de sanroque no tiene rabo", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    */

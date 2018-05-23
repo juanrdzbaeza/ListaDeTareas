@@ -1,32 +1,24 @@
 package com.juanrdzbaeza.listadetareas;
 
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class NewTask extends AppCompatActivity {
 
-    // TODO: 10/4/18 implementar Vista y Presentador para NewTask 
-
     EditText taskDescription, taskDate, taskClock;
     DatePicker datePicker;
     TimePicker timePicker;
-    Button btnCalendar, btnClock, btnOkDate, btnOkClock;
+    Button btnCalendar, btnOkDate, btnOkClock;
     Integer d,m,y,hor,min;
     Calendar calendar = Calendar.getInstance();
 
@@ -36,9 +28,7 @@ public class NewTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-        Intent a = getIntent();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (null != toolbar) {
             setSupportActionBar(toolbar);
         }
@@ -75,15 +65,11 @@ public class NewTask extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_save:
-                // Toast.makeText(this, "ha seleccionado el boton para salvar la tarea", Toast.LENGTH_SHORT).show();
                 // TODO: 11/4/18 si los campos de texto estan vacios la app deveria advertir de ello y no permitir el envio
-                // Intent intentNewTask = new Intent();
+
                 Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), calendar);
                 storeTask(nuevaTarea);
-                /*
-                intentNewTask.putExtra("Tarea", nuevaTarea);
-                setResult(1,intentNewTask);
-                */
+                closeContextMenu();
                 finish();
                 return true;
             case R.id.action_cancel:
@@ -99,7 +85,7 @@ public class NewTask extends AppCompatActivity {
      * storeTask recive la nueva tarea recien registrada por el usuario, extrae sus atributos,
      * descripcion como String, y fecha lo pasa a long, despues se conecta a la base de datos
      * gestionTareas, y escribe alli la informacion en los campos correspondientes.
-     * @param nuevaTarea
+     * @param nuevaTarea la nueva tarea para ser almacenada
      */
     private void storeTask(Tarea nuevaTarea) {
         String descripcion = nuevaTarea.getDescripcion();
@@ -113,8 +99,7 @@ public class NewTask extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("descripcion",descripcion);
         values.put("fecha",timeInMillis);
-        long newRowId = db.insert("tareas",null, values);
-        //Toast.makeText(this, String.valueOf(newRowId), Toast.LENGTH_LONG).show();
+        db.insert("tareas",null, values);
     }
 
     public void getDate(View v) {
@@ -146,6 +131,8 @@ public class NewTask extends AppCompatActivity {
          */
 
         calendar.set(y,--m,d,hor,min);
+
+        taskClock.setText(hor.toString()+":"+min.toString());
 
         taskClock.setText(hor.toString()+":"+min.toString());
         timePicker.setVisibility(View.INVISIBLE);

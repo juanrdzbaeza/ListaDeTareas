@@ -11,7 +11,7 @@ import java.util.Locale;
  * Objeto Tarea.
  */
 
-// TODO: 13/4/18 pensar si seria posible implementar fecha de inicio y fecha de fin.
+// TODO: 13/4/18 pensar si sería posible implementar fecha de inicio y fecha de fin.
 
 public class Tarea implements Serializable {
 

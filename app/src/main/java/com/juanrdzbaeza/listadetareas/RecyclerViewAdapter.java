@@ -3,7 +3,6 @@ package com.juanrdzbaeza.listadetareas;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +60,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.descripcion.setText(data.get(position).getDescripcion());
         holder.fecha.setTextColor(Color.DKGRAY);
-        // TODO: 13/4/18 el string conca de momento esta a prueba, arreglar futuramente.
-
         Calendar now = Calendar.getInstance();
         /*
          * si o = 1 o > fecha
@@ -70,11 +67,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
          * si o = -1 o < fecha
          */
         int o = now.compareTo(data.get(position).getFecha());
-        if (o == 1){
+        if (o > 0) {
             holder.fecha.setTextColor(Color.RED);
         }
-        String conca = (data.get(position).toString());
-        holder.fecha.setText(conca);
+        String fechaString = (data.get(position).toString());
+        holder.fecha.setText(fechaString);
     }
 
     /**
