@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
         
+        
         llenarVista();
     }
 
@@ -109,67 +110,67 @@ public class MainActivity extends AppCompatActivity {
         */
         tareas = new ArrayList<>();
         Calendar c = Calendar.getInstance();
-        c.set(2008,8, 23, 12,00);
+        c.set(2008,8, 23, 12,0);
         Tarea applePie          = new Tarea("Apple Pie", c);
 
         c = Calendar.getInstance();
-        c.set(2009,1, 9, 12,00);
+        c.set(2009,1, 9, 12,0);
         Tarea bananaBread       = new Tarea("Banana Bread", c);
 
         c = Calendar.getInstance();
-        c.set(2009,3, 25, 12,00);
+        c.set(2009,3, 25, 12,0);
         Tarea cupcake           = new Tarea("Cupcake", c);
 
         c = Calendar.getInstance();
-        c.set(2009,8, 15, 12,00);
+        c.set(2009,8, 15, 12,0);
         Tarea donut             = new Tarea("Donut", c);
 
         c = Calendar.getInstance();
-        c.set(2009,9, 26, 12,00);
+        c.set(2009,9, 26, 12,0);
         Tarea eclair            = new Tarea("Eclair", c);
 
         c = Calendar.getInstance();
-        c.set(2010,4, 20, 12,00);
+        c.set(2010,4, 20, 12,0);
         Tarea froyo             = new Tarea("Froyo", c);
 
         c = Calendar.getInstance();
-        c.set(2010,11, 6, 12,00);
+        c.set(2010,11, 6, 12,0);
         Tarea gingerbread       = new Tarea("Gingerbread", c);
 
         c = Calendar.getInstance();
-        c.set(2011,1, 22, 12,00);
+        c.set(2011,1, 22, 12,0);
         Tarea honeycomb         = new Tarea("Honeycomb", c);
 
         c = Calendar.getInstance();
-        c.set(2011,9, 18, 12,00);
+        c.set(2011,9, 18, 12,0);
         Tarea iceCreamSandwich  = new Tarea("Ice Cream Sandwich", c);
 
         c = Calendar.getInstance();
-        c.set(2012,6, 9, 12,00);
+        c.set(2012,6, 9, 12,0);
         Tarea jellyBean         = new Tarea("Jelly Bean", c);
 
         c = Calendar.getInstance();
-        c.set(2013,9, 31, 12,00);
+        c.set(2013,9, 31, 12,0);
         Tarea kitKat            = new Tarea("KitKat", c);
 
         c = Calendar.getInstance();
-        c.set(2014,10, 12, 12,00);
+        c.set(2014,10, 12, 12,0);
         Tarea lollipop          = new Tarea("Lollipop", c);
 
         c = Calendar.getInstance();
-        c.set(2015,9, 5, 12,00);
+        c.set(2015,9, 5, 12,0);
         Tarea marshmallow       = new Tarea("Marshmallow", c);
 
         c = Calendar.getInstance();
-        c.set(2016,5, 15, 12,00);
+        c.set(2016,5, 15, 12,0);
         Tarea nougat            = new Tarea("Nougat", c);
 
         c = Calendar.getInstance();
-        c.set(2017,7, 21, 12,00);
+        c.set(2017,7, 21, 12,0);
         Tarea oreo              = new Tarea("Oreo", c);
 
         c = Calendar.getInstance();
-        c.set(2018,0, 27, 12,00);
+        c.set(2018,0, 27, 12,0);
         Tarea p                 = new Tarea("P", c);
 
         Collections.addAll(tareas,applePie,bananaBread,cupcake,donut,eclair,froyo,
