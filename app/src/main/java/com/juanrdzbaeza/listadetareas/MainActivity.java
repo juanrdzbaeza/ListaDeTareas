@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initList() {
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
+                this,"gestionTareas", null, 1
+        );
         /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         String fecha = dateFormat.format(date);
