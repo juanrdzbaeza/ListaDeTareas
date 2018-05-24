@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ListaDeTareas</string>
+    <string name="descripcion">descripcion</string>
+    <string name="fecha">fecha</string>
+    <string name="settings_menu">Opciones</string>
+    <string name="delete_menu">Borrar</string>
+    <string name="share_menu">Compartir</string>
+    <string name="search_menu">Buscar</string>
+    <string name="button">boton</string>
+    <string name="que_hacer">¿Qué hay que hacer?</string>
+    <string name="que_dia">¿Qué día?</string>
+    <string name="descripcion_de_la_tarea">Descripcion de la tarea</string>
+    <string name="fecha_sin_fijar">Fecha sin fijar</string>
+    <string name="hora_sin_fijar">Hora sin Fijar</string>
+</resources>
