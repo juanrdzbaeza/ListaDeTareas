@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        loadTask();
+        //loadTask();
     }
 
     @Override
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * TODO: javadoc metodo cargarTareas()
+     *
      */
     @SuppressLint("Recycle")
     public void loadTask() {
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         tareas = new ArrayList<>();
         Tarea aux;
         Calendar c;
+        boolean r = false;
 
         if ((fila != null) && (fila.moveToFirst())) {
             do {
@@ -74,17 +76,20 @@ public class MainActivity extends AppCompatActivity {
                 aux.setDescripcion(fila.getString(1));
                 c.setTimeInMillis(fila.getLong(2));
                 aux.setFecha(c);
-                initList(aux); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar si procede llegado el momento.
+                r = initList(aux);
             }while (fila.moveToNext());
         } else {
             Toast.makeText(this, "No se encontraron tareas por hacer", Toast.LENGTH_SHORT).show();
         }
-
-        fillView();
+        if (r) fillView();
     }
 
     /**
-     * TODO: javadoc metodo fillView()
+     * El método fillView() [llenar vista] realiza el inflado de la vista principal a partir de la
+     * recicler view, para hacerlo recoge los datos almacenados ya en memoria principal dentro de la
+     * estructura de datos tareas, se instancia un RecyclerViewAdapter a partir del contexto de la
+     * vista, el "layout_fila", y la lista de tareas y se llama al metodo setAdapter para que realice
+     * el llenado de la vista con los datos.
      */
     public void fillView() {
 
@@ -97,13 +102,25 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-
+    /**
+     * Metodo sobrescrito de la clase AppCompatActivity extendida
+     * @param menu menu de la app para inflarlo
+     * @return valor booleano correcto o no
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
+    /**
+     * Metodo sobrescrito de la clase AppCompatActivity extendida. se trata de la logica de
+     * actuacion de los botones del menu de la app. recibe como parametro el elemento seleccionado
+     * desde la interfaz de la aplicacion. dependiendo del id del elemento se seleccionara una u
+     * otra accion.
+     * @param item elemento seleccionado
+     * @return valor booleano correcto o no
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -129,11 +146,48 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initList(Tarea t) {
+    /**
+     * El método initList() se encarga de recibir una tarea cada vez que es llamado, y la agrega a
+     * la estructura de datos que maneja la informacion en tiempo de ejecucion.
+     * en tiempo de ejecucion y de rellenarla con
+     * @param t
+     */
+    private boolean initList(Tarea t) {
+        return tareas.add(t);
+    }
 
-        tareas.add(t);
+}
 
-        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    /*
+    papelera:
+     */
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TASK){
+            if (resultCode == TAREA_OK) {
+                data.hasExtra("Tarea");
+                if (null != getIntent()){
+                    if (data.hasExtra("Tarea")) {
+
+                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
+
+                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
+                        tareas.add(nuevaTarea);
+
+                    }
+                }
+                fillView();
+            } else {
+                Toast.makeText(this, "el perro de sanroque no tiene rabo", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    */
+
+    /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         String fecha = dateFormat.format(date);
 
@@ -207,35 +261,3 @@ public class MainActivity extends AppCompatActivity {
                 jellyBean,kitKat,lollipop,marshmallow,
                 nougat,oreo,p);
         */
-    }
-
-}
-
-    /*
-    papelera:
-     */
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TASK){
-            if (resultCode == TAREA_OK) {
-                data.hasExtra("Tarea");
-                if (null != getIntent()){
-                    if (data.hasExtra("Tarea")) {
-
-                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
-
-                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
-                        tareas.add(nuevaTarea);
-
-                    }
-                }
-                fillView();
-            } else {
-                Toast.makeText(this, "el perro de sanroque no tiene rabo", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    */
