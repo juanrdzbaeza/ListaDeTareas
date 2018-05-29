@@ -59,7 +59,7 @@ public class NewTask extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = getIntent();
+        Intent intent = getIntent(); // TODO: preparar la carga de la tarea para llenar la vista y hacer la cama al update
         if (intent.hasExtra("SelectedTask")) {
             Tarea t = (Tarea) intent.getSerializableExtra("SelectedTask");
             taskDescription.setText(t.getDescripcion());
