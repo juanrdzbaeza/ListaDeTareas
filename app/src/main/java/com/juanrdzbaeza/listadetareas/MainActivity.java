@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        //loadTask();
     }
 
     @Override
