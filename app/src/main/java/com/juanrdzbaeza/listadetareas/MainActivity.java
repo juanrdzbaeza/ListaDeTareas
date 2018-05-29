@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         boolean r = loadTask();
         if (r){
             Toast.makeText(this, "Cargando tareas por hacer", Toast.LENGTH_LONG).show();
