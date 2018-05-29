@@ -15,12 +15,21 @@ import java.util.Locale;
 
 public class Tarea implements Serializable {
 
+    private Integer primaryKey;
     private String descripcion;
     private Calendar fecha;
 
     public Tarea(String descripcion, Calendar fecha) {
         this.descripcion = descripcion;
         this.fecha = fecha;
+    }
+
+    public Integer getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(Integer primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     public String getDescripcion() {

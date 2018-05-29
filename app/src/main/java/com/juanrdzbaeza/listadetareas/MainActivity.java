@@ -30,24 +30,37 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        loadTask();
-
+        //loadTask();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadTask();
+        boolean r = loadTask();
+        if (r){
+            Toast.makeText(this, "Cargando tareas por hacer", Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this, "No se encontraron tareas por hacer", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
      * TODO: javadoc metodo cargarTareas()
+     * El método loadTask() es llamado desde el estado de onResume de la vista para realizar la
+     * conexion a la base de datos "gestionTareas", recoger toda la tabla "tareas" y ordenarla
+     * por "fecha". se crea una tarea auxiliar donde se iran asignando en un bucle while los atributos
+     * encontrados en cada una de las filas que contenga la tabla, para ir llamando al metodo initList
+     * que agrega la tarea a la estructura de datos del tipo ArrayList, que en tijecución almacena
+     * el estado de la base de datos, esta consulta se realiza cada vez que la aplicacion vuelve de
+     * una pausa.
+     * @return valor booleano correcto o no.
      */
     @SuppressLint("Recycle")
-    public void loadTask() {
+    public boolean loadTask() {
         AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
                 this,"gestionTareas", null, 1
         );
+        //realizo la consulta
         SQLiteDatabase db = admin.getWritableDatabase();
         Cursor fila = null;
         try {
@@ -64,28 +77,36 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //declaro lo necesario
         tareas = new ArrayList<>();
         Tarea aux;
         Calendar c;
+        boolean r = false;
 
+        //implemento lógica para almacenar datos en tiempo de ejecución
         if ((fila != null) && (fila.moveToFirst())) {
             do {
                 aux = new Tarea(null,null);
                 c   = Calendar.getInstance();
+                aux.setPrimaryKey(fila.getInt(0));
                 aux.setDescripcion(fila.getString(1));
                 c.setTimeInMillis(fila.getLong(2));
                 aux.setFecha(c);
-                initList(aux); // TODO: 11/4/18 inicializacion de la lista cada vez que abre esta vista, desactivar si procede llegado el momento.
+                r = initList(aux);
             }while (fila.moveToNext());
         } else {
-            Toast.makeText(this, "No se encontraron tareas por hacer", Toast.LENGTH_SHORT).show();
+            return false;
         }
-
-        fillView();
+        if (r) fillView();
+        return true;
     }
 
     /**
-     * TODO: javadoc metodo fillView()
+     * El método fillView() [llenar vista] realiza el inflado de la vista principal a partir de la
+     * recicler view, para hacerlo recoge los datos almacenados ya en memoria principal dentro de la
+     * estructura de datos tareas, se instancia un RecyclerViewAdapter a partir del contexto de la
+     * vista, el "layout_fila", y la lista de tareas y se llama al metodo setAdapter para que realice
+     * el llenado de la vista con los datos.
      */
     public void fillView() {
 
@@ -98,13 +119,25 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-
+    /**
+     * Metodo sobrescrito de la clase AppCompatActivity extendida
+     * @param menu menu de la app para inflarlo
+     * @return valor booleano correcto o no
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
+    /**
+     * Metodo sobrescrito de la clase AppCompatActivity extendida. se trata de la logica de
+     * actuacion de los botones del menu de la app. recibe como parametro el elemento seleccionado
+     * desde la interfaz de la aplicacion. dependiendo del id del elemento se seleccionara una u
+     * otra accion.
+     * @param item elemento seleccionado
+     * @return valor booleano correcto o no
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -130,11 +163,49 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initList(Tarea t) {
+    /**
+     * El método initList() se encarga de recibir una tarea cada vez que es llamado, y la agrega a
+     * la estructura de datos que maneja la informacion en tiempo de ejecucion.
+     * en tiempo de ejecucion y de rellenarla con
+     * @param t se recibe la tarea que se desea agregar a la estructura de datos
+     * @return valor booleano correcto o no
+     */
+    private boolean initList(Tarea t) {
+        return tareas.add(t);
+    }
 
-        tareas.add(t);
+}
 
-        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    /*
+    papelera:
+     */
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TASK){
+            if (resultCode == TAREA_OK) {
+                data.hasExtra("Tarea");
+                if (null != getIntent()){
+                    if (data.hasExtra("Tarea")) {
+
+                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
+
+                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
+                        tareas.add(nuevaTarea);
+
+                    }
+                }
+                fillView();
+            } else {
+                Toast.makeText(this, "el perro de sanroque no tiene rabo", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    */
+
+    /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         String fecha = dateFormat.format(date);
 
@@ -208,35 +279,3 @@ public class MainActivity extends AppCompatActivity {
                 jellyBean,kitKat,lollipop,marshmallow,
                 nougat,oreo,p);
         */
-    }
-
-}
-
-    /*
-    papelera:
-     */
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TASK){
-            if (resultCode == TAREA_OK) {
-                data.hasExtra("Tarea");
-                if (null != getIntent()){
-                    if (data.hasExtra("Tarea")) {
-
-                        Toast.makeText(this, "ciqueracici", Toast.LENGTH_LONG).show();
-
-                        nuevaTarea = (Tarea) data.getExtras().getSerializable("Tarea");
-                        tareas.add(nuevaTarea);
-
-                    }
-                }
-                fillView();
-            } else {
-                Toast.makeText(this, "el perro de sanroque no tiene rabo", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    */
