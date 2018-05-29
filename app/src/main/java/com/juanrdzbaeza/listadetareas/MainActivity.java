@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             do {
                 aux = new Tarea(null,null);
                 c   = Calendar.getInstance();
+                aux.setPrimaryKey(fila.getInt(0));
                 aux.setDescripcion(fila.getString(1));
                 c.setTimeInMillis(fila.getLong(2));
                 aux.setFecha(c);

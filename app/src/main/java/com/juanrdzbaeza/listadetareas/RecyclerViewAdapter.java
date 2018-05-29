@@ -1,12 +1,15 @@
 package com.juanrdzbaeza.listadetareas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -58,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.pk.setText(String.valueOf(data.get(position).getPrimaryKey()));
         holder.descripcion.setText(data.get(position).getDescripcion());
         holder.fecha.setTextColor(Color.DKGRAY);
         Calendar now = Calendar.getInstance();
@@ -91,13 +95,41 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      * gráfico y un constructor que inicializa estos elementos gráficos.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private SparseBooleanArray selectedItems = new SparseBooleanArray();
+
+        private TextView pk;
         private TextView descripcion;
         private TextView fecha;
 
         private ViewHolder(View itemView) {
             super(itemView);
+
+            pk          = itemView.findViewById(R.id.primarykey);
             descripcion = itemView.findViewById(R.id.descripcion);
             fecha       = itemView.findViewById(R.id.fecha);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Called when a view has been clicked.
+                 *
+                 * @param v The view that was clicked.
+                 */
+                @Override
+                public void onClick(View v) {
+                    if (selectedItems.get(getAdapterPosition(),false)) {
+                        selectedItems.delete(getAdapterPosition());
+                        v.setSelected(false);
+                        Toast.makeText(context,"sada", Toast.LENGTH_LONG).show();
+                    } else {
+                        selectedItems.put(getAdapterPosition(),true);
+                        v.setSelected(true);
+                        Tarea selectedTask = data.get(getAdapterPosition());
+                        Intent intent = new Intent(context, NewTask.class);
+                        intent.putExtra("SelectedTask", selectedTask);
+                        context.startActivity(intent);
+                    }
+                }
+            });
+
         }
     }
 }

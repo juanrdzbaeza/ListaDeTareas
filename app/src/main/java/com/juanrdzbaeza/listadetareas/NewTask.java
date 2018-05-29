@@ -1,6 +1,8 @@
 package com.juanrdzbaeza.listadetareas;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,6 +53,20 @@ public class NewTask extends AppCompatActivity {
                 btnOkClock.setVisibility(View.INVISIBLE);
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if (intent.hasExtra("SelectedTask")) {
+            Tarea t = (Tarea) intent.getSerializableExtra("SelectedTask");
+            taskDescription.setText(t.getDescripcion());
+        } else {
+            Toast.makeText(this, "arzobispo", Toast.LENGTH_LONG).show();
+        }
+        
 
     }
 
