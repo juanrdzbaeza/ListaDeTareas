@@ -21,7 +21,7 @@ public class NewTask extends AppCompatActivity {
     DatePicker datePicker;
     TimePicker timePicker;
     Button btnCalendar, btnOkDate, btnOkClock;
-    Integer d,m,y,hor,min;
+    Integer d,m,y,hor,min, primaryKey;
     Calendar calendar = Calendar.getInstance();
 
 
@@ -62,7 +62,10 @@ public class NewTask extends AppCompatActivity {
         Intent intent = getIntent(); // TODO: preparar la carga de la tarea para llenar la vista y hacer la cama al update
         if (intent.hasExtra("SelectedTask")) {
             Tarea t = (Tarea) intent.getSerializableExtra("SelectedTask");
+            // TODO: 6/6/18 gestionar primaryKey 
             taskDescription.setText(t.getDescripcion());
+            taskDate.setText(t.toString());
+
         } else {
             Toast.makeText(this, "arzobispo", Toast.LENGTH_LONG).show();
         }
