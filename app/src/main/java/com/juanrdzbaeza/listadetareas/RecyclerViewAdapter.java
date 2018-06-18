@@ -24,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private int recyclerItemRes;
     private List<Tarea> data;
     private Context context;
+    private boolean etiquetaTiempo;
 
     /**
      * Constructor de clase.
@@ -32,9 +33,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      * @param data datos que rellenaran la lista
      */
     public RecyclerViewAdapter(Context context, int recyclerItemRes, List<Tarea> data) {
-        this.recyclerItemRes = recyclerItemRes;
-        this.data = data;
-        this.context = context;
+        this.recyclerItemRes    = recyclerItemRes;
+        this.data               = data;
+        this.context            = context;
+        this.etiquetaTiempo     = false;
     }
 
     /**
@@ -65,6 +67,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.descripcion.setText(data.get(position).getDescripcion());
         holder.fecha.setTextColor(Color.DKGRAY);
         Calendar now = Calendar.getInstance();
+        holder.cuando.setTextColor(Color.BLUE);
+        // TODO: 18/6/18 logica para las etiquetas de tiempo
         /*
          * si o = 1 o > fecha
          * si o = 0 o = fecha
@@ -72,8 +76,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
          */
         int o = now.compareTo(data.get(position).getFecha());
         if (o > 0) {
+            if(!etiquetaTiempo && (o > 0)) {
+                holder.cuando.setVisibility(View.VISIBLE);
+                holder.cuando.setText("atrasado");
+                etiquetaTiempo = true;
+            }
             holder.fecha.setTextColor(Color.RED);
+        }else if(etiquetaTiempo && (o < 0)){
+            holder.cuando.setVisibility(View.VISIBLE);
+            holder.cuando.setText("no atrasado aun");
+            etiquetaTiempo = false;
         }
+
         String fechaString = (data.get(position).toString());
         holder.fecha.setText(fechaString);
     }
@@ -97,6 +111,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
+        private TextView cuando;
         private TextView pk;
         private TextView descripcion;
         private TextView fecha;
@@ -104,6 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private ViewHolder(View itemView) {
             super(itemView);
 
+            cuando      = itemView.findViewById(R.id.cuando);
             pk          = itemView.findViewById(R.id.primarykey);
             descripcion = itemView.findViewById(R.id.descripcion);
             fecha       = itemView.findViewById(R.id.fecha);
