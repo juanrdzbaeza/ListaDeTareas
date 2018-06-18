@@ -95,7 +95,7 @@ public class NewTask extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "aqui", Toast.LENGTH_LONG).show();
                     updateTask.setDescripcion(taskDescription.getText().toString());
-
+                    updateTask.setFecha(calendar);
                     updateTask(updateTask);
                     closeContextMenu();
                     finish();
@@ -157,8 +157,6 @@ public class NewTask extends AppCompatActivity {
         d = datePicker.getDayOfMonth();
         m = datePicker.getMonth(); // los meses empiezan en 0 (enero = 0, diciembre = 11)
         y = datePicker.getYear();
-
-
 
         taskDate.setText(d.toString()+"/"+(++m).toString()+"/"+y.toString());
         timePicker.setVisibility(View.VISIBLE);
