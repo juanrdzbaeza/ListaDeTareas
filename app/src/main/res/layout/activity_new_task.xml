@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.juanrdzbaeza.listadetareas.NewTask">
@@ -17,64 +17,65 @@
         android:id="@+id/id_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
-        android:text="@string/que_hacer" />
+        android:layout_marginTop="16dp"
+
+        android:text="@string/que_hacer"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
         android:id="@+id/task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text|textAutoCorrect"
-        android:ems="10"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/id_task"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/descripcion_de_la_tarea"
+        android:inputType="text|textAutoCorrect"
         android:labelFor="@+id/task"
-        android:hint="@string/descripcion_de_la_tarea" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_task" />
 
     <TextView
-        android:text="@string/que_dia"
+        android:id="@+id/id_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/id_date"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/task"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
-        android:textSize="18sp" />
+        android:layout_marginTop="16dp"
+        android:text="@string/que_dia"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/task" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
         android:id="@+id/date"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/id_date"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:hint="@string/fecha_sin_fijar"
+        android:layout_marginTop="16dp"
+        android:ems="10"
         android:focusable="false"
-        />
+        android:hint="@string/fecha_sin_fijar"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_date" />
 
     <Button
         android:id="@+id/btn_calendar"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:drawableStart="@android:drawable/ic_menu_my_calendar"
-        app:layout_constraintTop_toBottomOf="@+id/id_date"
-        app:layout_constraintStart_toEndOf="@+id/date"
-        android:layout_marginStart="16dp"
-        style="@style/Widget.AppCompat.Button.Small" />
+        app:layout_constraintStart_toEndOf="@+id/clock"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <DatePicker
         android:id="@+id/dp"
@@ -92,22 +93,21 @@
 
     <Button
         android:id="@+id/btn_ok_date"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Small"
-        app:layout_constraintStart_toEndOf="@+id/dp"
-        android:layout_marginStart="36dp"
-        android:drawableStart="@android:drawable/checkbox_on_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:visibility="invisible"
-        android:onClick="getDate"
-        android:text="o"
-        app:layout_constraintHorizontal_bias="0.2"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/clock"
+        android:drawableStart="@android:drawable/checkbox_on_background"
+        android:onClick="getDate"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/dp"
+        app:layout_constraintTop_toBottomOf="@+id/clock" />
 
     <TimePicker
         android:id="@+id/tp"
@@ -123,39 +123,37 @@
         app:layout_constraintTop_toBottomOf="@+id/clock" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_ok_clock"
         style="@style/Widget.AppCompat.Button.Small"
-        android:drawableStart="@android:drawable/checkbox_on_background"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:onClick="getClock"
-        android:text="i"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toEndOf="@+id/tp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/clock"
+        android:drawableStart="@android:drawable/checkbox_on_background"
+        android:onClick="getClock"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintStart_toEndOf="@+id/tp"
+        app:layout_constraintTop_toBottomOf="@+id/clock"
         app:layout_constraintVertical_bias="0.456" />
 
     <EditText
+        android:id="@+id/clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/clock"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
-        android:hint="@string/hora_sin_fijar"
-        android:visibility="invisible"
-        android:inputType="time"
+        android:layout_marginTop="16dp"
+        android:ems="10"
         android:focusable="false"
-        />
+        android:hint="@string/hora_sin_fijar"
+        android:inputType="time"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
 
 </android.support.constraint.ConstraintLayout>
