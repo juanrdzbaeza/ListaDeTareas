@@ -23,6 +23,7 @@ public class NewTask extends AppCompatActivity {
     Button btnCalendar, btnOkDate, btnOkClock;
     Integer d,m,y,hor,min, primaryKey;
     Calendar calendar = Calendar.getInstance();
+    Tarea updateTask;
 
 
     @Override
@@ -61,11 +62,10 @@ public class NewTask extends AppCompatActivity {
         super.onResume();
         Intent intent = getIntent(); // TODO: preparar la carga de la tarea para llenar la vista y hacer la cama al update
         if (intent.hasExtra("SelectedTask")) {
-            Tarea t = (Tarea) intent.getSerializableExtra("SelectedTask");
-            // TODO: 6/6/18 gestionar primaryKey 
-            taskDescription.setText(t.getDescripcion());
-            taskDate.setText(t.toString());
-
+            updateTask = (Tarea) intent.getSerializableExtra("SelectedTask");
+            primaryKey = updateTask.getPrimaryKey();
+            taskDescription.setText(updateTask.getDescripcion());
+            taskDate.setText(updateTask.toString());
         } else {
             Toast.makeText(this, "arzobispo", Toast.LENGTH_LONG).show();
         }
@@ -86,11 +86,22 @@ public class NewTask extends AppCompatActivity {
             case R.id.action_save:
                 // TODO: 11/4/18 si los campos de texto estan vacios la app deveria advertir de ello y no permitir el envio
 
-                Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), calendar);
-                storeTask(nuevaTarea);
-                closeContextMenu();
-                finish();
-                return true;
+                if (primaryKey == null) {
+                    Tarea nuevaTarea = new Tarea(taskDescription.getText().toString(), calendar);
+                    storeTask(nuevaTarea);
+                    closeContextMenu();
+                    finish();
+                    return true;
+                } else {
+                    Toast.makeText(this, "aqui", Toast.LENGTH_LONG).show();
+                    updateTask.setDescripcion(taskDescription.getText().toString());
+
+                    updateTask(updateTask);
+                    closeContextMenu();
+                    finish();
+                    return true;
+                }
+
             case R.id.action_cancel:
                 Toast.makeText(this, "ha seleccionado el boton para cancelar la tarea", Toast.LENGTH_SHORT).show();
                 closeContextMenu();
@@ -119,6 +130,25 @@ public class NewTask extends AppCompatActivity {
         values.put("descripcion",descripcion);
         values.put("fecha",timeInMillis);
         db.insert("tareas",null, values);
+    }
+
+    /**
+     *
+     * @param modificandoTarea
+     */
+    private void updateTask(Tarea modificandoTarea){
+        String descripcion = modificandoTarea.getDescripcion();
+        Calendar fecha = modificandoTarea.getFecha();
+        long timeInMillis = fecha.getTimeInMillis();
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(
+                this,"gestionTareas", null, 1
+        );
+        SQLiteDatabase db = admin.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("descripcion",descripcion);
+        values.put("fecha",timeInMillis);
+        int r = db.update("tareas", values,"task_id = '"+primaryKey+"'",null);
+        //Toast.makeText(this, "el numero de filas afectadas es"+String.valueOf(r), Toast.LENGTH_LONG).show();
     }
 
     public void getDate(View v) {
